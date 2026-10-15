@@ -8,7 +8,8 @@ Building my own AI assistant while learning AI Engineering.
 - Qwen3:4b
 
 ## Progress
-- Day 1: Built my first basic AI assistant using Python and Ollama.
+- Day 01: Built my first basic AI assistant using Python and Ollama.
+- Day 02: Added environment variables using .env to avoid hardcoding configuration values and implemented a while loop for continuous conversation with an exit condition.
 
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.
