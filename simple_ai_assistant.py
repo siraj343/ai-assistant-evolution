@@ -11,6 +11,13 @@ client = OpenAI(
 
 messages = []
 
+messages.append(
+    {
+        "role": "system",
+        "content": "Act like a very humble agent and respond always under 20 words."
+    }
+)
+
 while True:
 
     user_input = input("\nSiraj: ")
