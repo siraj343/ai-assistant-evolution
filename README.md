@@ -16,7 +16,9 @@ Building my own AI assistant while learning AI Engineering.
 - Day 03: Added conversation memory by storing user and assistant messages in a list, allowing the AI to use
           previous messages as context.
 
-- Day 4: Added a system prompt to define my AI assistant's personality, behavior, and response constraints. Learned the five ingredients of effective prompting: role, audience, task, constraints, and output format.               
+- Day 4: Added a system prompt to define my AI assistant's personality, behavior, and response constraints. Learned the five ingredients of effective prompting: role, audience, task, constraints, and output format. 
+
+- Day 5: Implemented tool calling (function calling), connecting LLM responses to Python functions using tool schemas, function mappings, and tool results.
 
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.

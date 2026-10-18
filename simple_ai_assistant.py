@@ -1,6 +1,9 @@
+
 from openai import OpenAI
 from dotenv import load_dotenv
+from tools import TOOLS, FUNCTION_NAME_TO_FUNCTION_MAP
 import os
+import json
 
 load_dotenv()   # by default looks for .env file
 
@@ -22,7 +25,7 @@ while True:
 
     user_input = input("\nSiraj: ")
 
-    if user_input.lower in ["exit", "quit", "bye", "byeee", "goodboy"]:
+    if user_input.lower() in ["exit", "quit", "bye", "byeee", "goodboy"]:
         break
 
     messages.append(
@@ -34,15 +37,39 @@ while True:
 
     response = client.chat.completions.create(
         model=os.getenv("MODEL"),
-        messages = messages
+        messages = messages,
+        tools = TOOLS,
     )
 
-    messages.append(
-        {
-            "role": "assistant",
-            "content": response.choices[0].message.content
-        }
-    )
-    print("Assistant: " + response.choices[0].message.content) # Response from the LLM
-    print(response.choices[0].message.role)
+    msg = response.choices[0].message
 
+    if msg.tool_calls:
+        messages.append(msg.model_dump(exclude_none=True))
+
+        for tool_call in msg.tool_calls:
+            func_name = tool_call.function.name
+            funt_args = json.loads(tool_call.function.arguments or "{}")
+
+            fn = FUNCTION_NAME_TO_FUNCTION_MAP[func_name]
+            result = fn(**funt_args)
+
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": str(result)
+            })
+
+        #2nd call to LLM API
+        response = client.chat.completions.create(
+            model=os.getenv("MODEL"),
+            messages=messages
+        )
+
+        msg = response.choices[0].message
+
+    messages.append({
+        "role": "assistant",
+        "content": msg.content
+    })
+
+    print("Assistant: " + (msg.content or ""))
