@@ -20,5 +20,7 @@ Building my own AI assistant while learning AI Engineering.
 
 - Day 5: Implemented tool calling (function calling), connecting LLM responses to Python functions using tool schemas, function mappings, and tool results.
 
+- Day 6: Added a weather tool that accepts city arguments, learned argument extraction through tool calling, and enabled the assistant to choose between multiple tools.
+
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.
