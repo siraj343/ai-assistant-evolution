@@ -22,5 +22,7 @@ Building my own AI assistant while learning AI Engineering.
 
 - Day 6: Added a weather tool that accepts city arguments, learned argument extraction through tool calling, and enabled the assistant to choose between multiple tools.
 
+- Day 7: Improved tool calling with a multi-step execution loop, added a user-city tool, and handled chained tool calls with step limits and error handling.
+
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.

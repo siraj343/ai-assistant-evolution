@@ -14,12 +14,17 @@ client = OpenAI(
 
 messages = []
 
+# safety limit: the maximum number of rounds for one user question.
+MAX_STEPS = 5
+
 messages.append(
     {
         "role": "system",
         "content": "Act like a very humble agent and respond always under 20 words."
     }
 )
+
+# Chat loop startss from here
 
 while True:
 
@@ -35,37 +40,48 @@ while True:
         }
     )
 
-    response = client.chat.completions.create(
-        model=os.getenv("MODEL"),
-        messages = messages,
-        tools = TOOLS,
-    )
+#  Chained tool calling
+    for step in range(MAX_STEPS):
+        response = client.chat.completions.create(
+                model=os.getenv("MODEL"),
+                messages = messages,
+                tools = TOOLS,
+        )
+        
+        msg = response.choices[0].message
 
-    msg = response.choices[0].message
+        if not msg.tool_calls:
+            break
 
-    if msg.tool_calls:
-        messages.append(msg.model_dump(exclude_none=True))
+        messages.append(msg)
 
         for tool_call in msg.tool_calls:
             func_name = tool_call.function.name
-            funt_args = json.loads(tool_call.function.arguments or "{}")
+            func_args = {}
 
-            fn = FUNCTION_NAME_TO_FUNCTION_MAP[func_name]
-            result = fn(**funt_args)
+            try:
+                funt_args = json.loads(tool_call.function.arguments or "{}")
+                fn = FUNCTION_NAME_TO_FUNCTION_MAP[func_name]
+                result = fn(**funt_args)
 
-            messages.append({
+            except Exception as e:
+                result = f"Error while running {func_name}: {e}"
+
+    else:
+        # ran out of steps: The model never gave the final answer
+        fallback = "Sorry, I couldn't finish this within the step limit."
+        messages.append({
+            "role": "assistant",
+            "content": fallback
+        })
+        print("Assistant: " + fallback)
+        continue
+
+    messages.append({
                 "role": "tool",
                 "tool_call_id": tool_call.id,
                 "content": str(result)
             })
-
-        #2nd call to LLM API
-        response = client.chat.completions.create(
-            model=os.getenv("MODEL"),
-            messages=messages
-        )
-
-        msg = response.choices[0].message
 
     messages.append({
         "role": "assistant",
