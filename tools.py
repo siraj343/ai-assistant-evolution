@@ -1,5 +1,7 @@
 from datetime import datetime
+from Utilities.utilities import log
 import requests
+import json
 
 
 def get_current_time():
@@ -59,3 +61,19 @@ FUNCTION_NAME_TO_FUNCTION_MAP = {
     "get_city_weather" : get_city_weather,
     "get_user_city" : get_user_city,
 }
+
+
+def run_tool(tool_call):
+    func_name = tool_call.function.name
+    func_args = {}
+
+    try:
+        func_args = json.loads(tool_call.function.arguments or "{}")
+        log(f"🔧 {func_name}({func_args})")
+        fn = FUNCTION_NAME_TO_FUNCTION_MAP[func_name]
+        result = fn(**func_args)
+    except Exception as e:
+        result = f"Error while running {func_name} : {e}"
+
+    log(f"   ↳ {result}")
+    return str(result)
