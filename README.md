@@ -24,7 +24,9 @@ previous messages as context.
 
 - Day 07: Improved tool calling with a multi-step execution loop, added a user-city tool, and handled chained tool calls with step limits and error handling.
 
-- Day 8: Refactored the AI agent with improved error handling, tool execution, debug logging, and reusable utilities. Added safer API response handling and organized the project structure.
+- Day 08: Refactored the AI agent with improved error handling, tool execution, debug logging, and reusable utilities. Added safer API response handling and organized the project structure.
+
+- Day 09: Learned LLM streaming, collected response chunks into complete conversation history, and explored reconstructing streamed tool calls.
 
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.
