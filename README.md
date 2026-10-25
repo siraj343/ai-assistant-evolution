@@ -28,5 +28,7 @@ previous messages as context.
 
 - Day 09: Learned LLM streaming, collected response chunks into complete conversation history, and explored reconstructing streamed tool calls.
 
+- Day 10: Integrated streaming into the AI agent for live responses and tool calls, and added Ctrl+C interruption handling.
+
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.
