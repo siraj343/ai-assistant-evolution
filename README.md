@@ -30,5 +30,7 @@ previous messages as context.
 
 - Day 10: Integrated streaming into the AI agent for live responses and tool calls, and added Ctrl+C interruption handling.
 
+- Day 11: Started learning RAG, generated text embeddings using Ollama, and implemented cosine similarity to compare semantic meaning between text samples.
+
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.
