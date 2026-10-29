@@ -32,5 +32,7 @@ previous messages as context.
 
 - Day 11: Started learning RAG, generated text embeddings using Ollama, and implemented cosine similarity to compare semantic meaning between text samples.
 
+- Day 12: Built a document search system using embeddings and cosine similarity. Added a knowledge base, ranked relevant documents using top-k retrieval, and explored embedding updates and semantic search limitations.
+
 ## Goal
 To gradually make my AI assistant more advanced as I learn new concepts.
